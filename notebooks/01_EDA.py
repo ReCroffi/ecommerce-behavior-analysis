@@ -78,4 +78,63 @@ print(event_proportions)
 # O evento mais frequente no dataset é o "view", que representa a visualização do produto pelos clientes. Isso indica que os clientes estão mais propensos a visualizar os produtos do que a adicioná-los ao carrinho ou comprá-los. A proporção de visualizações é significativamente maior do que as adições ao carrinho e as compras, o que sugere que muitos clientes estão apenas explorando os produtos sem necessariamente avançar para as etapas seguintes do funil de conversão.
 # %%[markdown]
 # Apenas 1.74% dos usuarios que visualizam chegam a finalizar a compra.
+# %%[markdown]
+# Vamos começar agora a algumas metricas.
+# A taxa de conversão é uma métrica importante para entender o comportamento de compra dos clientes. Ela representa a proporção de clientes que realizam uma ação desejada, como adicionar um produto ao carrinho ou finalizar uma compra, em relação ao número total de clientes que visualizaram o produto. A taxa de conversão pode ser calculada utilizando a fórmula: 
+# Taxa de Conversão = (Número de Ações Desejadas / Número Total de Visualizações) * 100
+# %%
+# Calculando a taxa de conversão para adição ao carrinho
+add_to_cart_conversion_rate = (df['event_type'].value_counts()['cart'] / df['event_type'].value_counts()['view']) * 100
+print(f"Taxa de Conversão View -> Adição ao Carrinho: {add_to_cart_conversion_rate:.2f}%")
+# Calculando a taxa de conversão para compra
+purchase_conversion_rate = (df['event_type'].value_counts()['purchase'] / df['event_type'].value_counts()['view']) * 100
+print(f"Taxa de Conversão View -> Compra: {purchase_conversion_rate:.2f}%")
+#Calculando a taxa de conversao  Cart -> Compra
+cart_to_purchase_conversion_rate = (df['event_type'].value_counts()['purchase'] / df['event_type'].value_counts()['cart']) * 100
+print(f"Taxa de Conversão Cart -> Compra: {cart_to_purchase_conversion_rate:.2f}%")
+# %%[markdown]
+# - Apenas 2.27% dos clientes que visualizam um produto adicionam ele ao carrinho.
+# - Apenas 1.74% dos clientes que visualizam um produto chegam a finalizar a compra.
+# - E 80.18% dos clientes que adicionam um produto ao carrinho chegam a finalizar a compra.
+# %%[markdown]
+# Essas taxas de conversão indicam que há uma queda significativa no número de clientes que avançam do estágio de visualização para a adição ao carrinho e, posteriormente, para a compra. Isso sugere que muitos clientes estão apenas explorando os produtos sem necessariamente avançar para as etapas seguintes do funil de conversão. A alta taxa de conversão do carrinho para a compra indica que, uma vez que os clientes adicionam um produto ao carrinho, eles estão mais propensos a finalizar a compra. No entanto, a baixa taxa de conversão da visualização para a adição ao carrinho sugere que pode haver oportunidades para otimizar a experiência do usuário e incentivar mais clientes a avançar no processo de compra.
+# %%[markdown]
+# Agora vamos analisar os usuarios, começando com o total de usuarios unicos.
+# Verificando o total de usuários únicos
+unique_users = df['user_id'].nunique()
+print(f"Total de usuários únicos: {unique_users}")
+# %%[markdown]
+# O dataset contém um total de 3.022.290 usuarios únicos, o que indica uma grande base de clientes para análise. Essa diversidade de usuários pode fornecer insights valiosos sobre o comportamento de compra, preferências e padrões de consumo dos clientes. Com uma quantidade tão significativa de usuários únicos, é possível realizar análises segmentadas para identificar diferentes grupos de clientes e personalizar as estratégias de marketing e vendas de acordo com as necessidades e preferências de cada segmento.
+# %%[markdown]
+#Seguindo para média de eventos por usuario, essa métrica pode fornecer insights sobre o nível de engajamento dos clientes com a plataforma de comércio eletrônico. Uma média mais alta de eventos por usuário pode indicar que os clientes estão mais ativos e envolvidos com os produtos, enquanto uma média mais baixa pode sugerir que os clientes estão apenas explorando a plataforma sem interagir muito.
+# Calculando a média de eventos por usuário
+#%%
+average_events_per_user = df.groupby('user_id')['event_type'].count().mean()
+print(f"Média de eventos por usuário: {average_events_per_user:.2f}")
+# %%[markdown]
+# A média de eventos por usuário é de aproximadamente 14.05, o que indica que, em média, cada usuário realizou cerca de 14 eventos relacionados a produtos na plataforma de comércio eletrônico. Essa métrica sugere um nível moderado de engajamento dos clientes.
+# %%[markdown]
+# Quantos usuarios realizaram pelo menos um compra?
+#<br></br>
+# Calculando o número de usuários que realizaram pelo menos uma compra
+#%%
+users_with_purchase = df[df['event_type'] == 'purchase']['user_id'].nunique()
+print(f"Número de usuários que realizaram pelo menos uma compra: {users_with_purchase}")
+# %%[markdown]
+# O número de usuários que realizaram pelo menos uma compra é de 347118, um pouco mais de 11% dos usuários únicos. Isso indica que uma parte significativa dos clientes está realizando compras na plataforma, o que é um sinal positivo para o negócio. No entanto, também sugere que há espaço para melhorar a taxa de conversão e incentivar mais usuários a realizar compras.
+# %%[markdown]
+# Vamos ver agora a diferença de comportamento entre os usuarios que realizam compras e os que não compram.
+# Calculando a média de eventos por usuário para os usuários que realizaram compras
+# %%
+users_with_purchases = df[df['event_type'] == 'purchase']['user_id'].unique()
+df_users_with_purchase = df[df['user_id'].isin(users_with_purchases)]
+average_events_per_user_with_purchase = df_users_with_purchase.groupby('user_id')['event_type'].count().mean()
+print(f"Média de eventos por usuário que realizou compras: {average_events_per_user_with_purchase:.2f}")
+# Calculando a média de eventos por usuário para os usuários que não realizaram compras
+users_without_purchases = df[~df['user_id'].isin(users_with_purchases)]['user_id'].unique()
+df_users_without_purchase = df[df['user_id'].isin(users_without_purchases)]
+average_events_per_user_without_purchase = df_users_without_purchase.groupby('user_id')['event_type'].count().mean()
+print(f"Média de eventos por usuário que não realizou compras: {average_events_per_user_without_purchase:.2f}")
+# %%[markdown]
+# Podemos ver que os usuários que realizaram compras têm uma média de eventos por usuário de aproximadamente 40.83, enquanto os usuários que não realizaram compras têm uma média de eventos por usuário de aproximadamente 10.57. Ou seja, usuários que convertem apresentam ~4x mais interações, sugerindo que aumentar o engajamento dos usuários pode ser uma estratégia eficaz para incentivar mais compras na plataforma de comércio eletrônico.
 # %%
