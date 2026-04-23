@@ -121,6 +121,8 @@ plt.xticks(['view', 'cart', 'purchase'], ['📺 Visualização', '🛒 Carrinho'
 plt.yticks(fontsize=11)
 plt.grid(axis='y', alpha=0.3)
 plt.tight_layout()
+plt.savefig('../reports/01_funil_de_compra.png', dpi=300, bbox_inches='tight')
+plt.show()
 #%%[markdown]
 # Observa-se um volume extremamente alto de visualizações (~40M), porém uma queda abrupta para eventos de adição ao carrinho e compra, indicando que o principal gargalo do funil está na transição de visualização para intenção de compra.
 # %%[markdown]
@@ -187,6 +189,8 @@ plt.xticks([0, 1], ['❌ Não Comprou', '✅ Comprou'], fontsize=12)
 plt.yticks(fontsize=11)
 plt.grid(axis='y', alpha=0.3)
 plt.tight_layout()
+plt.savefig('../reports/02_compradores_vs_nao_compradores.png', dpi=300, bbox_inches='tight')
+plt.show()
 #%%[markdown]
 # 
 # %%[markdown]
@@ -252,6 +256,7 @@ axes[1].set_ylabel('Média de Eventos', fontsize=12, weight='bold')
 axes[1].grid(axis='y', alpha=0.3)
 
 plt.tight_layout()
+plt.savefig('../reports/03_analise_sessoes.png', dpi=300, bbox_inches='tight')
 plt.show()  
 #%%[markdown]
 # Vemos que a maioria das sessões não resultam em compra, mas as sessões que resultam em compra têm uma média significativamente maior de eventos, indicando um engajamento muito mais alto. Isso sugere que os clientes que estão mais engajados e interagindo mais com a plataforma têm uma probabilidade muito maior de realizar uma compra. Portanto, estratégias para aumentar o engajamento dos usuários podem ser eficazes para melhorar as taxas de conversão e incentivar mais compras na plataforma.

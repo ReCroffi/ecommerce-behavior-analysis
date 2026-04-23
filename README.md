@@ -26,7 +26,7 @@ Este projeto realiza uma análise completa do comportamento de compra de cliente
 
 ### 1. Distribuição de Eventos no Funil de Compra
 
-![Funil de Compra](https://img.shields.io/badge/Gráfico-1-blue?style=flat-square)
+![Funil de Compra](reports/01_funil_de_compra.png)
 
 Este gráfico mostra a distribuição de **todos os eventos** ao longo do funil:
 
@@ -40,7 +40,7 @@ Este gráfico mostra a distribuição de **todos os eventos** ao longo do funil:
 
 ### 2. Comparação de Eventos: Compradores vs Não Compradores
 
-![Compradores vs Não Compradores](https://img.shields.io/badge/Gráfico-2-blue?style=flat-square)
+![Compradores vs Não Compradores](reports/02_compradores_vs_nao_compradores.png)
 
 Este gráfico compara o **volume total de eventos** entre:
 
@@ -53,7 +53,7 @@ Este gráfico compara o **volume total de eventos** entre:
 
 ### 3. Análise Comparativa de Sessões
 
-![Análise de Sessões](https://img.shields.io/badge/Gráfico-3-blue?style=flat-square)
+![Análise de Sessões](reports/03_analise_sessoes.png)
 
 Dois gráficos lado a lado:
 
